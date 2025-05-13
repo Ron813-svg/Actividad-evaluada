@@ -5,6 +5,7 @@ import employeeRoutes from './src/routes/employee.js'
 import clientRoutes from './src/routes/clients.js'
 import loginRoutes from './src/routes/login.js'
 import logoutRoutes from './src/routes/logout.js'
+import registerRoutes from './src/routes/register.js'
 
 const app = express()
 app.use(express.json())
@@ -14,6 +15,7 @@ app.use('/api/employees', employeeRoutes)
 app.use('/api/clients', clientRoutes)
 app.use('/api/login', loginRoutes)
 app.use('/api/logout', logoutRoutes)
+app.use('/api/register', registerRoutes)
 
 
 export default app
