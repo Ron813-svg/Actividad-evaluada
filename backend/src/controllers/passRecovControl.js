@@ -61,34 +61,39 @@ passRecov.requestCode = async (req, res) => {
 }
 
 passRecov.verifyCode = async (req, res) => {
-    const { code } = req.body
- 
+    const { code } = req.body;
+
     try {
-        const token =  req.cookies.tokenRecoveryCode
- 
-        const decoded = jsonwebtoken.verify(token, config.JWT.secret)
-       
- 
-        if(decoded.code !== code){
-            return res.json({message: 'Invalid Code'})
+        const token = req.cookies.tokenRecoveryCode;
+
+        if (!token) {
+            return res.status(400).json({ message: "Token not found" });
         }
- 
+
+        const decoded = jsonwebtoken.verify(token, config.JWT.secret);
+
+        if (decoded.code !== code) {
+            return res.json({ message: "Invalid Code" });
+        }
+
         const newToken = jsonwebtoken.sign(
-            {email: decoded.email,
+            {
+                email: decoded.email,
                 code: decoded.code,
                 userType: decoded.userType,
                 verified: true
             },
- 
             config.JWT.secret,
-            {expiresIn: "20m"}
-        )
-        res.cookie("tokenRecoveryCode", newToken,{maxAge:20*60*1000})
- 
-        res.json({message: "Code Verified successfully"})
- 
-    } catch (error){
-        console.log("Error: "+error)
+            { expiresIn: "20m" }
+        );
+
+        res.cookie("tokenRecoveryCode", newToken, { maxAge: 20 * 60 * 1000 });
+
+        res.json({ message: "Code Verified successfully" });
+
+    } catch (error) {
+        console.error("Error: " + error);
+        res.status(500).json({ message: "Server error" });
     }
 }
 
