@@ -83,7 +83,7 @@ passRecov.verifyCode = async (req, res) => {
             config.JWT.secret,
             {expiresIn: "20m"}
         )
-        res.cookie("tokenRecoveryCode", newToken,{maxAge:20*60*100})
+        res.cookie("tokenRecoveryCode", newToken,{maxAge:20*60*1000})
  
         res.json({message: "Code Verified successfully"})
  
@@ -146,7 +146,7 @@ passRecov.newPass = async (req, res) => {
  
  
     } catch (error) {
-        console.log("error" + error)
+        console.log("error: " + error)
     }
 }
 
