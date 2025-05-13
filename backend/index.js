@@ -3,13 +3,11 @@ import { config } from './src/config.js'
 import './database.js'
 
 async function main() {
-    try {
-        app.listen(config.port, () => {
-            console.log(`Server is running on port ${config.server.port}`)
-        })
-    } catch (error) {
-        console.error('Error starting server:', error)
-    }
+    app.listen(config.server.port);
+
+    console.log("Me prendio el servidor");
 }
+
+
 
 main()

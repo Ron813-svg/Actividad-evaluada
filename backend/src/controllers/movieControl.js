@@ -23,7 +23,7 @@ movieControl.post = async (req, res) => {
         const { title, description, director, genre, year, duration } = req.body
         let imgUrl = ""
 
-    if (req.files) {
+    if (req.file) {
         const result = await cloudinary.uploader.upload(req.file.path, {folder: 'public', allowed_formats:['jpg', 'png', 'jpeg']})
         imgUrl = result.secure_url
     }
@@ -31,7 +31,7 @@ movieControl.post = async (req, res) => {
     const newMovie = new movieModels({title,description,director,genre,year,duration,image: imgUrl})
     newMovie.save()
 
-    res.json({message: "Movie Created",data: newMovie})
+    res.json({message: "Movie Created"})
 
     } catch (error) {
         console.log('error'+ error)
@@ -63,3 +63,5 @@ movieControl.put = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+export default movieControl
