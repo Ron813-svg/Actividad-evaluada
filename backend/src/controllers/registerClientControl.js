@@ -37,7 +37,7 @@ register.registerClient = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
-register.verifactionCode = async (req, res) => {   
+register.verificationCode = async (req, res) => {   
     const { code } = req.body
     const token = req.cookies.VerificationCode
     try {
